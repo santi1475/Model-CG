@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    volumes:
+      - .:/workspaces/backend
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    working_dir: /workspaces/backend
+
+  bot:
+    build: ./bot
+    environment:
+      - API_URL=http://api:8000
+    volumes:
+      - ./bot/session:/app/session
+    depends_on:
+      - api
+    restart: unless-stopped

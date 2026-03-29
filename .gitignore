@@ -1,2 +1,5 @@
-venv
-DETALLES_TECNICOS_OCR_BALANZA.md
+venv/
+.env
+__pycache__/
+*.pyc
+bot/session/
